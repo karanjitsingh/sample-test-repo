@@ -1,16 +1,122 @@
 resources:
-- repo: self
-queue:
-  name: Default
-  demands: Cmd
 
+- repo: self
+
+queue:
+
+  name: Default
+
+  demands: 
+
+  - msbuild
+
+  - visualstudio
+
+  - vstest
+
+
+
+
+
+#Your build pipeline references an undefined variable named ‘Parameters.solution’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+#Your build pipeline references an undefined variable named ‘Parameters.solution’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+#Your build pipeline references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+
+#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+
+#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+
+#Your build pipeline references an undefined variable named ‘password’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+#Your build pipeline references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+
+#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
 
 steps:
-- task: BatchScript@1
-  displayName: 'Run script \\siddhap2\share\cc\CodeCoverageAttchment\tool\CodeCoverageAttchment.exe'
+
+- task: NuGetToolInstaller@0
+
+  displayName: 'Use NuGet 4.4.1'
+
   inputs:
-    filename: '\\siddhap2\share\cc\CodeCoverageAttchment\tool\CodeCoverageAttchment.exe'
 
-    arguments: '"$(SYSTEM.TEAMFOUNDATIONCOLLECTIONURI)" "$(BUILD.BUILDURI)" "$(SYSTEM.TEAMPROJECT)" "\\siddhap2\share\cc\CodeCoverageAttchment\CCFiles" "$(System.AccessToken)" $(BUILD.BUILDID)'
+    versionSpec: 4.4.1
 
 
+
+
+
+- task: NuGetCommand@2
+
+  displayName: 'NuGet restore'
+
+  inputs:
+
+    restoreSolution: '$(Parameters.solution)'
+
+
+
+
+
+- task: VSBuild@1
+
+  displayName: 'Build solution **\*.sln'
+
+  inputs:
+
+    solution: '$(Parameters.solution)'
+
+
+
+    platform: '$(BuildPlatform)'
+
+
+
+    configuration: '$(BuildConfiguration)'
+
+
+
+
+
+- powershell: |
+   Write-Host "##vso[task.setvariable variable=password;issecret=true;]realpassword"
+    
+
+  displayName: 'PowerShell Script'
+
+
+
+- task: VSTest@2
+
+  displayName: 'VsTest - testAssemblies'
+
+  inputs:
+
+    testAssemblyVer2: |
+     **\$(BuildConfiguration)\*test*.dll
+     !**\obj\**
+
+
+
+    overrideTestrunParameters: '-password $(password)'
+
+
+
+    codeCoverageEnabled: true
+
+
+
+    platform: '$(BuildPlatform)'
+
+
+
+    configuration: '$(BuildConfiguration)'
+
+
+
+
+
+
+ 
