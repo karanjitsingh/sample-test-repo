@@ -46,7 +46,7 @@ steps:
      **\*test*.dll
      !**\obj\**
 
-     searchFolder: |
+     searchFolder:
      D:\devfabric\gg\UnitTestProject1\UnitTestProject1\bin\Debug
 
 
