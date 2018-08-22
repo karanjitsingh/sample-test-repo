@@ -1,0 +1,16 @@
+resources:
+- repo: self
+queue:
+  name: Default
+  demands: Cmd
+
+
+steps:
+- task: BatchScript@1
+  displayName: 'Run script \\siddhap2\share\cc\CodeCoverageAttchment\tool\CodeCoverageAttchment.exe'
+  inputs:
+    filename: '\\siddhap2\share\cc\CodeCoverageAttchment\tool\CodeCoverageAttchment.exe'
+
+    arguments: '"$(SYSTEM.TEAMFOUNDATIONCOLLECTIONURI)" "$(BUILD.BUILDURI)" "$(SYSTEM.TEAMPROJECT)" "\\siddhap2\share\cc\CodeCoverageAttchment\CCFiles" "$(System.AccessToken)" $(BUILD.BUILDID)'
+
+
