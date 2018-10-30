@@ -1,41 +1,20 @@
 resources:
-
 - repo: self
 
 queue:
-
   name: Default
-
   demands: 
-
   - msbuild
-
   - visualstudio
-
   - vstest
 
 steps:
 
 - task: VSTest@2
-
   displayName: 'VsTest - testAssemblies'
-
   inputs:
-
     testAssemblyVer2: |
      **\*test*.dll
      !**\obj\**
-
     searchFolder: D:\devfabric\gg\UnitTestProject1\UnitTestProject1\bin\Debug
-
-
-
     codeCoverageEnabled: true
-
-
-
-
-
-
-
- 
