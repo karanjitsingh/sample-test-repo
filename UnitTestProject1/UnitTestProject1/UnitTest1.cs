@@ -18,6 +18,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod2()
         {
+            System.Threading.Thread.Sleep(5000)
         }
 
         [TestMethod]
