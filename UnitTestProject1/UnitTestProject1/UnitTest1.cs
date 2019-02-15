@@ -14,7 +14,7 @@ namespace UnitTestProject1
             Assert.AreEqual(cl.add(1, 3), 4);
         }
 
-
+        [TestMethod]
         public void TestMethod4() {
             Console.WriteLine("stdout");
             Assert.Fail("fail");
