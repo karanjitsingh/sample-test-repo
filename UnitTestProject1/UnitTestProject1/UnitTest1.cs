@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClassLibrary1;
 
@@ -24,6 +24,11 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod3()
         {
+        }
+        
+        public void TestMethod4() {
+            Console.WriteLine("stdout");
+            Assert.Fail("fail");
         }
     }
 }
