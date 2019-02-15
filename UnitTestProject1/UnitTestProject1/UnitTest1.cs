@@ -15,17 +15,6 @@ namespace UnitTestProject1
         }
 
 
-        [TestMethod]
-        public void TestMethod2()
-        {
-            System.Threading.Thread.Sleep(500);
-        }
-
-        [TestMethod]
-        public void TestMethod3()
-        {
-        }
-        
         public void TestMethod4() {
             Console.WriteLine("stdout");
             Assert.Fail("fail");
